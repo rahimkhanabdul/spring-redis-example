@@ -16,12 +16,13 @@ public class RedisConfiguration {
     public JedisConnectionFactory connectionFactory()
     {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
-        configuration.setHostName("192.168.2.103");
+        configuration.setHostName("127.0.0.1");
         configuration.setPort(6379);
         return new JedisConnectionFactory(configuration);
     }
 
-    public RedisTemplate<String, Object> redisTemplate(){
+    @Bean
+    public RedisTemplate<String, Object> template(){
         RedisTemplate<String, Object> template = new RedisTemplate();
         template.setConnectionFactory(connectionFactory());
         template.setKeySerializer(new StringRedisSerializer());

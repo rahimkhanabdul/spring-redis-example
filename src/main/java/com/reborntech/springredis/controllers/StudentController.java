@@ -23,14 +23,13 @@ public class StudentController {
         return studentRepository.findAll();
     }
 
-    @GetMapping("/regisNo")
+    @GetMapping("/{regisNo}")
     public Student getStudentByRegistrationNo(@PathVariable String regisNo){
         return studentRepository.findByRegistrationNo(regisNo);
     }
 
-    @DeleteMapping("/regisNo")
+    @DeleteMapping("/{regisNo}")
     public void removeStudent(@PathVariable String regisNo){
         studentRepository.deleteStudent(regisNo);
     }
-
 }
