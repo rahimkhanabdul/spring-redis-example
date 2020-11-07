@@ -4,9 +4,9 @@ import com.reborntech.springredis.entities.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @Repository
 public class StudentRepository {
@@ -14,8 +14,11 @@ public class StudentRepository {
     @Autowired
     private RedisTemplate template;
 
+    Logger logger = Logger.getLogger(StudentRepository.class.getName());
+
     public Student save(Student student){
         template.opsForHash().put(HASH_KEY, student.getRegistrationNo(),student);
+        logger.info("Student record created successfully!");
         return student;
     }
 
@@ -27,7 +30,14 @@ public class StudentRepository {
         return (Student) template.opsForHash().get(HASH_KEY,regisNo);
     }
 
+    public Student updateStudent(Student student){
+        template.opsForHash().put(HASH_KEY, student.getRegistrationNo(), student);
+        logger.info("Student record updated successfully!");
+        return student;
+    }
+
     public void deleteStudent(String regisNo){
         template.opsForHash().delete(HASH_KEY, regisNo);
+        logger.info("Student record deleted successfully!");
     }
 }

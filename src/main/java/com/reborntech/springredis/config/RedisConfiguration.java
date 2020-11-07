@@ -9,15 +9,20 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+
 @Configuration
 @EnableRedisRepositories
 public class RedisConfiguration {
+    Logger logger = Logger.getLogger(RedisConfiguration.class.getName());
     @Bean
     public JedisConnectionFactory connectionFactory()
     {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
-        configuration.setHostName("127.0.0.1");
+        configuration.setHostName("192.168.2.103");
         configuration.setPort(6379);
+        logger.info("Redis connected successfully!");
         return new JedisConnectionFactory(configuration);
     }
 
@@ -31,6 +36,7 @@ public class RedisConfiguration {
         template.setValueSerializer(new JdkSerializationRedisSerializer());
         template.setEnableTransactionSupport(true);
         template.afterPropertiesSet();
+        logger.info("Redis Template configured successfully!");
         return template;
     }
 }
